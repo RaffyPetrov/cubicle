@@ -7,7 +7,8 @@ const router = Router();
 
 router.use('/about', aboutController);
 router.use('/', productController);
-router.get('*', (req, res) => {
+
+router.get('/{*any}', (req, res) => {
     res.render('404', {layout: false});
 });
 
