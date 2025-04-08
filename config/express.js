@@ -4,7 +4,9 @@ const exphbs = require('express-handlebars');
 
 function setupExpress(app) {
     app.engine('hbs', exphbs.engine({
-        extname: 'hbs' }));
+        extname: 'hbs',
+        layoutsDir: 'views/layouts',
+     }));
 
     app.set('view engine', 'hbs');
 
