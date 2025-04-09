@@ -30,7 +30,7 @@ function create(data, callback) {
         JSON.stringify(productsData), 
         callback
     ); 
-    ;
+    
 }
 module.exports = {
     getAll,
