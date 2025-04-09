@@ -1,5 +1,5 @@
 const { Router } = require('express');
-
+const productService = require('../services/productService');
 const router = Router();
 
 
@@ -14,8 +14,9 @@ router.get('/create', (req, res) => {
 
 
 router.post('/create', (req, res) => {
-    console.log(req.body);
-    res.redirect('/products/create');
+    productService.create(req.body);
+
+    res.redirect('/products/');
 });
 
 
