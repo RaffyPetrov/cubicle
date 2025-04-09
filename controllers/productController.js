@@ -17,7 +17,13 @@ router.get('/create', (req, res) => {
 
 
 router.post('/create', validateProduct, (req, res) => {
-    productService.create(req.body);
+    productService.create(req.body, (err) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send('Error creating product!');
+        }
+        res.redirect('/products/');
+    });
 
     res.redirect('/products/');
 });
