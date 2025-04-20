@@ -1,3 +1,5 @@
+const isAuthenticated = require('./middlewares/isAuthenticated');
+const isGuest = require('./middlewares/isGuest');
 const { Router } = require('express');
 const accessoryController = require('./controllers/accessoryController');
 const productController = require('./controllers/productController');

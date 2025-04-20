@@ -1,28 +1,26 @@
 const User = require('../models/User');
-const jsonwebtoken = require('jsonwebtoken');
-const { SALT_ROUNDS, SECRET } = require('../config/index.js');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { SECRET } = require('../config/index');
 
+const register = async ({ username, password }) => {
+    const existing = await User.findOne({ username });
+    if (existing) throw new Error('Username already exists');
 
-const register = async ({username, password}) => {
-    let salt = await bcrypt.genSalt(SALT_ROUNDS);
-    let hash = await bcrypt.hash(password, salt);
+    const hash = await bcrypt.hash(password, 10);
+    const user = new User({ username, password: hash });
 
-    const user = new User({username, password: hash});
-    
-    return await user.save();
+    return await user.save(); // If this fails, we know it's a schema issue
 };
 
-const login = async ({username, password}) => {
-    let user = await User.findOne({username});
+const login = async ({ username, password }) => {
+    const user = await User.findOne({ username });
+    if (!user) throw new Error('User not found');
 
-    if(!user) throw ({message: 'User not found!'});
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) throw new Error('Wrong password');
 
-    let isMatch = await bcrypt.compare(password, user.password);
-    if(!isMatch) throw ({message: 'Wrong password!'});
-
-    let token = jsonwebtoken.sign({ _id: user._id}, SECRET);
-
+    const token = jwt.sign({ _id: user._id }, SECRET);
     return token;
 };
 

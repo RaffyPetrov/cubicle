@@ -23,18 +23,18 @@ async function getAll(query) {
 
 
 function getOne(id) {
-    return Cube.findById(id).lean();;
+    return Cube.findById(id).lean();
 
 }
 
-function getOneWithAccessories(id, accessories = false) {
+function getOneWithAccessories(id) {
     return Cube.findById(id).populate('accessories').lean();
 }
 
-function create(data) {
-    let cube = new Cube(data);
+function create(data, userId) {
+    let cube = new Cube({...data, creator: userId});
 
-    return cube.save()
+    return cube.save();
 }
 
 async function attachAccessory(productId, accessoryId) {
@@ -45,10 +45,23 @@ async function attachAccessory(productId, accessoryId) {
     return product.save();
 }
 
+function updateOne(productId, productData)  {
+    return Cube.updateOne({_id: productId}, productData);
+   
+};
+
+function deleteOne(productId)  {
+    return Cube.deleteOne({_id: productId});
+   
+};
+
+
 module.exports = {
     getAll,
     getOne,
     getOneWithAccessories,
     create,
     attachAccessory,
+    updateOne,
+    deleteOne,
 }
