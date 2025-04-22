@@ -6,8 +6,6 @@ const { validateProduct } = require('./helpers/productHelpers');
 const isAuthenticated = require('../middlewares/isAuthenticated');
 const isGuest = require('../middlewares/isGuest');
 
-
-
 router.get('/', (req, res) => {
     productService.getAll(req.query)
     .then(products => {
@@ -17,17 +15,16 @@ router.get('/', (req, res) => {
     
 });
 
-
 router.get('/create', isAuthenticated, (req, res) => {
     res.render('create', {title: 'Create'});
 });
 
 
-router.post('/create', isAuthenticated, validateProduct, (req, res) => {
+router.post('/create', isAuthenticated, (req, res, next) => {
     productService.create(req.body, req.user._id)
         .then(() => res.redirect('/products'))
         .catch(() => res.status(500).end())
-
+        // .catch(next);
 });
 
 

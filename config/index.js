@@ -9,7 +9,7 @@ const config = {
 },
     production: {
         PORT: 80,
-        DB_CONNECTION: 'mongodb+srv://rubixcube32:DiPfIPaEnKsxwKtE@cluster0.m6oqkak.mongodb.net/',
+        DB_CONNECTION: 'insert here your production connection string',
         SALT_ROUNDS: 10,
         SECRET: 'navuhodonosor',
         COOKIE_NAME: 'USER_SESSION',

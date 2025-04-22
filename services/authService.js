@@ -4,13 +4,10 @@ const jwt = require('jsonwebtoken');
 const { SECRET } = require('../config/index');
 
 const register = async ({ username, password }) => {
-    const existing = await User.findOne({ username });
-    if (existing) throw new Error('Username already exists');
 
-    const hash = await bcrypt.hash(password, 10);
-    const user = new User({ username, password: hash });
+    const user = new User({ username, password });
 
-    return await user.save(); // If this fails, we know it's a schema issue
+    return await user.save(); 
 };
 
 const login = async ({ username, password }) => {
